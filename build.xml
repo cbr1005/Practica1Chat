@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="miBuild" default="compilar" basedir=".">
+	<description>Práctica 1</description>
+
+	<!-- Propiedades del proyecto... -->
+
+	<!-- Directorios -->
+	<property name="src.dir" value="${basedir}/src/main" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="dist.dir" value="${basedir}/dist" />
+	<property name="doc.dir" value="${basedir}/doc" />
+	<property name="lib.dir" value="${basedir}/lib" />
+
+	<!-- =============== Development Targets ================================= -->
+	<target name="todos" description="Todas las tareas." depends="limpiar, preparar, compilar, empaquetar, javadoc" />
+
+	<!-- ==================== Target Preparar================================= -->
+	<target name="preparar" description="Prepara todos los directorios">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${doc.dir}" />
+	</target>
+
+	<!-- ==================== Target Limpiar ==================================== -->
+	<target name="limpiar" description="Elimina todos los directorios.">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${doc.dir}" />
+	</target>
+
+
+	<!-- ==================== Target Compilar ==================================== -->
+	<target name="compilar" depends="preparar" description="Compila la solucion completa.">
+		<javac encoding="UTF-8" srcdir="${src.dir}" destdir="${build.dir}" source="1.8" target="1.8" includeantruntime="false" />
+	</target>
+
+
+	<!-- ==================== Target Empaquetar ==================================== -->
+	<target name="empaquetar" depends="compilar" description="Empaqueta la aplicacion un .jar.">
+		<jar destfile="${dist.dir}/miEmpaquetado-1.0.jar" basedir="${build.dir}" />
+	</target>
+	
+	
+	<!-- ==================== Target Documentar ==================================== -->
+	<target name="javadoc" depends="compilar" description="Genera el javadoc">
+		<javadoc encoding="WINDOWS-1252" charset="UTF-8" docencoding="UTF-8" destdir="${doc.dir}">
+			<fileset dir="${src.dir}" casesensitive="yes">
+				<include name="**/*.java"/>
+			</fileset>	
+		</javadoc>
+	</target>
+
+</project>
